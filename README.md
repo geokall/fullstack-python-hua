@@ -34,3 +34,14 @@ Creating MySQL Script
                  "`type` varchar(40) NULL,"
                  " PRIMARY KEY (`productID`),"
                  "UNIQUE INDEX `productID_UNIQUE` (`productID` ASC) VISIBLE);")
+
+gia kafka topics etreksa
+sudo docker exec -it kafka /bin/sh
+cd /opt/kafka/bin
+./kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic products-topic
+./kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic users-topic
+
+ ./bin/kafka-topics.sh --list --zookeeper zookeeper:2181
+
+kafka container id
+ sudo docker cp deleteTopic.sh ee886fb4f646:/tmp

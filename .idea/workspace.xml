@@ -5,16 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69562b33-1587-4450-9a0d-2cc769fbba77" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/books.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Consumer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ERProducer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Flask.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GraphProducer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Neo4j.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deleteTopic.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/references/consumer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/references/kafka.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/references/mysql_data.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/references/neo4j_data.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/references/producer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/fullstack.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fullstack.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MySQL.py" beforeDir="false" afterPath="$PROJECT_DIR$/MySQL.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,12 +51,21 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="fullstack" is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="fullstack" />
+      </console-settings>
+    </option>
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -90,8 +108,20 @@
       <workItem from="1640515506143" duration="7577000" />
       <workItem from="1640529646547" duration="2349000" />
       <workItem from="1640551669123" duration="210000" />
-      <workItem from="1640551923484" duration="5935000" />
+      <workItem from="1640551923484" duration="6460000" />
+      <workItem from="1640558706892" duration="928000" />
+      <workItem from="1640599644157" duration="13568000" />
+      <workItem from="1640623101343" duration="66000" />
+      <workItem from="1640686780300" duration="7224000" />
     </task>
+    <task id="LOCAL-00001" summary="Inserting data">
+      <created>1640557866228</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1640557866228</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,7 +139,11 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Inserting data" />
+    <option name="LAST_COMMIT_MESSAGE" value="Inserting data" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/fullstack$main.coverage" NAME="main Coverage Results" MODIFIED="1640553535969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/fullstack$main.coverage" NAME="main Coverage Results" MODIFIED="1640603911394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -1,0 +1,106 @@
+sudo docker exec -it kafka /bin/sh
+cd opt/
+cd kafka
+./bin/kafka-topics.sh --bootstrap-server=localhost:9092 --list
+./kafka-topics.sh --bootstrap-server=localhost:9092 --delete --topic products-topic
+
+sudo docker cp deleteTopic.sh kafka:/tmp
+
+sudo docker exec kafka tmp/deleteTopic.sh
+
+
+./bin/kafka-topics.sh --create --topic products-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+
+# if list is not empty
+    if products_not_inserted_by_users:
+        print('Checking what is not inserted...')
+        for item in products_not_inserted_by_users:
+            query = {'productID': item['productID']}
+            document = collection.find(query)
+            for x in document:
+                print('____Product is in database. Adding user...')
+                query = {'productID': item['productID']}
+                new_user = {'$push': {'userName': item['name']}}
+                collection.update_one(query, new_user)
+                print('____Database updated.')
+                product_exists = True
+                products_not_inserted_by_users.remove({'productID': item['productID'], 'name': item['name']})
+
+    if message.topic == 'products-topic':
+        query = {"productID": data['productID']}
+        document = collection.find(query)
+
+        print('Product not in database. Inserting...')
+        collection.insert_one({'productID': data['productID'],
+                               'productName': data['productName'],
+                               'userName': []})
+    else:
+        product_exists = False
+        for product in data['productID']:
+            query = {'productID': product}
+            document = collection.find(query)
+            for x in document:
+                print('Product is in database. Adding user...')
+                query = {'productID': product}
+                new_user = {'$push': {'userName': data['name']}}
+                collection.update_one(query, new_user)
+                print('Database updated.')
+                product_exists = True
+
+            if not product_exists:
+                print('Product is not in database yet. Storing user in list')
+                products_not_inserted_by_users.append({'productID': product, 'name': data['name']})
+
+
+
+
+
+################################################################################
+#         collection.insert_one({'name': data['name'],
+#                                'age': data['age'],
+#                                'purchased': data['purchased'],
+#                                'products': []})
+#         print('User added.')
+#
+#         found = False
+#         for product in data['productID']:
+#             for item in products_list:
+#                 if product == item['productID']:
+#                     print("Product exists in list. Adding product..")
+#                     query = {'name': data['name']}
+#                     new_product = {'$push': {'products': item}}
+#                     collection.update_one(query, new_product)
+#                     print('Database updated.')
+#                     found = True
+#                     break
+#             if not found:
+#                 print('Product not found, stored in list for future use.')
+#                 products_not_inserted.append({'name': data['name'], 'productID': product})
+#
+#     # if list is not empty
+#     if products_not_inserted and products_list:
+#         for product in products_not_inserted:
+#             for item in products_list:
+#                 if product['productID'] == item['productID']:
+#                     print("____Product is stored in list. Adding product to user..")
+#                     query = {'name': product['name']}
+#                     new_product = {'$push': {'products': item}}
+#                     collection.update_one(query, new_product)
+#                     print('____Database updated.')
+#                     products_not_inserted.remove({'productID': product['productID'], 'name': product['name']})
+#                     break
+#
+# if products_not_inserted:
+#     for product in products_not_inserted:
+#         for item in products_list:
+#             if product['productID'] == item['productID']:
+#                 print("____Product is stored in list. Adding product to user..")
+#                 query = {'name': product['name']}
+#                 new_product = {'$push': {'products': item}}
+#                 collection.update_one(query, new_product)
+#                 print('____Database updated.')
+#                 products_not_inserted.remove({'productID': product['productID'], 'name': product['name']})
+#                 break
+# print('=================CONSUMER STOPPED=================')
+# print(products_not_inserted)
