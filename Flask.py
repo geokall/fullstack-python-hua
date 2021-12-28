@@ -8,21 +8,24 @@ client = MongoClient('localhost:27017',
                      username='root',
                      password='Qwerty123!',
                      authMechanism='SCRAM-SHA-256')
+
 database = client['usersDB']
 collection = database['users']
 
 
 @app_flask.route('/user/<name>', methods=['GET'])
-def show_user_profile(name):
+def find_products_by_username(name):
     username = escape(name)
-    cursor = collection.find({'name': username}, {"products": 1})
-    list_cur = list(cursor)
-    print(list_cur)
-    if len(list_cur) == 0:
-        return {'error': 'no users found'}
-    elif len(list_cur) > 1:
-        return {'error': 'more than 1 user found'}
-    elif len(list_cur) == 1:
-        return {'products': list_cur[0].get('products')}
+
+    response = collection.find({'name': username}, {"products": 1})
+
+    response_list = list(response)
+
+    if len(response_list) == 0:
+        return {'notFoundError': 'None users found with this username'}
+    elif len(response_list) > 1:
+        return {'duplicateError': 'In DB exists more than one users with the same username'}
+    elif len(response_list) == 1:
+        return {'products': response_list[0].get('products')}
     else:
-        return {'error': 'something went wrong'}
+        return {'error': 'Generic error'}

@@ -7,10 +7,9 @@ def insert_data_on_my_sql():
     ratings, titles, types, prices = return_from_csv_columns()
 
     try:
-        cnx = mysql.connector.connect(user='root', password='Qwerty123!',
-                                      database='hua-python')
+        cnx = mysql.connector.connect(host='localhost', user='root', password='Qwerty123!', database='hua-python')
         cursor = cnx.cursor()
-        table = ("CREATE TABLE `hua-python`.`Product` ("
+        table = ("CREATE TABLE IF NOT EXISTS `hua-python`.`Product` ("
                  "`productID` INT NOT NULL,"
                  "`name` VARCHAR(150) NOT NULL,"
                  "`price` DOUBLE NOT NULL,"
@@ -47,7 +46,7 @@ def insert_data_on_my_sql():
 
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print("Something is wrong with your user name or password")
+            print("Wrong credentials")
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
             print("Database does not exist")
         else:

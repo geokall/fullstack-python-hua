@@ -1,16 +1,15 @@
 import os
-import csv
 
 from Flask import app_flask
 from MySQL import insert_data_on_my_sql
-from Neo4j import insertToNeo4j
+from Neo4j import insert_data_to_neo4j
 
 if __name__ == '__main__':
 
     # Connect to MySql database, create table Product and insert 50 books
     insert_data_on_my_sql()
     # Connect to Neo4j database, create users and relationships and insert 15 users
-    insertToNeo4j()
+    insert_data_to_neo4j()
     #
     # delete existing topics
     os.system("sudo -S docker exec kafka tmp/deleteTopic.sh")

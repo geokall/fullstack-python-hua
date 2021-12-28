@@ -44,7 +44,7 @@ def fusion(product_list, usr):
     fused_user = {
         'name': usr['name'],
         'age': usr['age'],
-        'purchased': usr['purchased'],
+        'height': usr['height'],
         'products': result
     }
 
@@ -87,7 +87,7 @@ for message in consumer:
                     users_left.append({
                         'name': user['name'],
                         'age': user['age'],
-                        'purchased': user['purchased'],
+                        'height': user['height'],
                         'productID': fuse.get('not_inserted')
                     })
 
