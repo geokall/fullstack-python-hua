@@ -10,42 +10,41 @@ try:
                                   database='hua-python')
     cursor = cnx.cursor()
 
-    allProductsFromDB = "SELECT * FROM Product;"
-    cursor.execute(allProductsFromDB)
+    products_from_db = "SELECT * FROM Product;"
+    cursor.execute(products_from_db)
 
-    row_headers = [x[0] for x in cursor.description]
-    allRows = cursor.fetchall()
+    # retrieve all column names
+    column_names = [x[0] for x in cursor.description]
+    all_rows = cursor.fetchall()
 
-    listOfJsonData = []
+    list_of_json_data = []
 
     # using dict in order to format JSON string from list of tuples
     # zip to pair together each item
-    for row in allRows:
-        listOfJsonData.append(dict(zip(row_headers, row)))
+    for row in all_rows:
+        list_of_json_data.append(dict(zip(column_names, row)))
 
     producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                              value_serializer=lambda x:
                              json.dumps(x).encode('utf-8'))
 
-    print(len(allProductsFromDB))
+    products_length = len(products_from_db)
 
-    for i in range(len(allProductsFromDB)):
-        print('Sending data: ', listOfJsonData[i])
-        future = producer.send('products-topic', listOfJsonData[i])
+    for i in range(products_length):
+        print('Sending data to products-topic: ', list_of_json_data[i])
+        kafka_producer = producer.send('products-topic', list_of_json_data[i])
+        # waiting 2 seconds per json data, will give the result 10 elements per 20 seconds
         sleep(2)
-        # Block for 'synchronous' sends
         try:
-            record_metadata = future.get(timeout=10)
+            response_producer = kafka_producer.get(timeout=5)
 
             # Successful result returns assigned partition and offset
-            print(record_metadata.topic)
-            print(record_metadata.partition)
-            print(record_metadata.offset)
+            print(response_producer.topic)
+            print(response_producer.partition)
+            print(response_producer.offset)
         except KafkaError as e:
-            # Decide what to do if produce request failed...
             print('[ERROR] ' + e.__str__())
 
-    # block until all async messages are sent
     producer.flush()
 
 except mysql.connector.Error as err:

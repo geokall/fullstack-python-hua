@@ -6,20 +6,17 @@ from Neo4j import insert_data_to_neo4j
 
 if __name__ == '__main__':
 
-    # Connect to MySql database, create table Product and insert 50 books
+    # Creating Table Product on MySQL with 50 books-products
     insert_data_on_my_sql()
-    # Connect to Neo4j database, create users and relationships and insert 15 users
+
+    # Creating users and friendship relationships
     insert_data_to_neo4j()
-    #
-    # delete existing topics
+
+    # delete existing topics __consumer_offsets, products-topic, users-topic
     os.system("sudo -S docker exec kafka tmp/deleteTopic.sh")
 
-    # start the consumer
-    os.system("gnome-terminal -- python Consumer.py")
-
-    # # start the producers
     os.system("gnome-terminal -- python ERProducer.py")
     os.system("gnome-terminal -- python GraphProducer.py")
+    os.system("gnome-terminal -- python Consumer.py")
 
-    # # start the flask
     app_flask.run()

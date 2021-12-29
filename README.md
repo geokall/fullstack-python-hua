@@ -1,6 +1,6 @@
 # Extract Transform Load procedure - HUA
 
-## What is this all about
+## What this is all about
 Please read [Extract-Transform-Load-Procedure-HUA](https://docs.google.com/document/d/1S0bsfSV8wyfmRdnTLYC2k5t9HR3GiPdVPvfVQ95Bi1E/edit)
 
 ## Installation
@@ -85,7 +85,7 @@ To see the available lists
  ./bin/kafka-topics.sh --list --zookeeper zookeeper:2181
 
 To copy the delete script in the tmp folder:
-sudo docker cp deleteTopic.sh ee886fb4f646:/tmp
+sudo docker cp deleteTopic.sh [kafka-container-id]:/tmp
 ```
 
 ## How to run
@@ -99,7 +99,19 @@ Downloaded and inserted the first 50 rows of this [dataset](https://www.kaggle.c
 productID is manually inserted, the rest data is read from the csv reader.
 name, price, rating and type.
 
+The main script is responsible to erase everything in the very first step such as topics, users from Neo4j. MySQL's data are not erased.
+
 ![Screenshot](images/productsMySQL.png)
 
-The script is responsible in its own execution to erase everything such as topics, users from Neo4j. MySQL's data are not erased.
+In the next step, a graph of users is inserted in the Neo4j database with these attributes:
+id, age, height, name and productID
+
+![screenshot](images/neo4j.png)
+
+Two scripts for each producer exist. ERProducer.py sends messages to the products-topic and GraphProducer.py sends messages to the users-topic.
+
+
+
+
+
 

@@ -19,6 +19,7 @@ def insert_data_to_neo4j():
 
     app = App(url, user, password)
     app.delete_nodes()
+
     app.create_friendship_between_two("Giorgos", "Lydia")
     app.create_friendship_between_two("Christos", "Pantelis")
 
@@ -28,7 +29,7 @@ def insert_data_to_neo4j():
     app.add_friendship_between_two(app.find_person_by_name("Nikolas"), "Dionysia")
     app.add_friendship_between_two(app.find_person_by_name("Nikolas"), "Stefania")
     app.add_friendship_between_two(app.find_person_by_name("Nikolas"), "Giannis")
-    #
+
     app.match_friendship_between_two(app.find_person_by_name("Giorgos"), app.find_person_by_name("Pantelis"))
     app.match_friendship_between_two(app.find_person_by_name("Stefania"), app.find_person_by_name("Christos"))
 
@@ -115,7 +116,7 @@ class App:
             # Write transactions allow the driver to handle retries and transient errors
             product_list = []
 
-            number_of_products = random.randint(1, 5)
+            number_of_products = random.randint(1, 4)
 
             for x in range(number_of_products):
                 product_list.append(random.randint(1, 50))
@@ -131,6 +132,7 @@ class App:
                 product_list,
                 random_age,
                 random_height)
+
             for record in result:
                 print("Created friendship between: {p1}, {p2}".format(
                     p1=record['p1'], p2=record['p2']))

@@ -5,50 +5,47 @@ from kafka.errors import KafkaError
 from neo4j import GraphDatabase
 
 
-def return_nodes():
+def fetch_all_nodes():
     uri = "neo4j://localhost:7687"
     driver = GraphDatabase.driver(uri, auth=("neo4j", "hua-neo4j"))
     with driver.session() as session:
-        result = session.read_transaction(return_all_nodes)
+        result = session.read_transaction(retrieve_all_nodes_from_neo4j)
         for record in result:
             return record
 
 
-def return_all_nodes(tx):
+def retrieve_all_nodes_from_neo4j(tx):
     query = (
         "MATCH (n) "
         "RETURN n "
     )
     result = tx.run(query)
     print("Returned all nodes in database.")
-    # print(result.data())
     return [result.data()]
 
 
-neo4j_list = return_nodes()
-neo4j_nodes = []
+neo4j_list = fetch_all_nodes()
+filtered_neo4j_nodes_list = []
+
 for obj in range(len(neo4j_list)):
-    neo4j_nodes.append(neo4j_list[obj]["n"])
-    print(neo4j_list[obj]["n"])
+    # Removing {'n':}
+    filtered_neo4j_nodes_list.append(neo4j_list[obj]["n"])
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda m: json.dumps(m).encode('utf-8'))
-
-for i in range(15):
-    print('Sending data: ', neo4j_nodes[i])
-    future = producer.send('users-topic', neo4j_nodes[i])
+for i in range(len(filtered_neo4j_nodes_list)):
+    print('Sending data to users-topic: ', filtered_neo4j_nodes_list[i])
+    future = producer.send('users-topic', filtered_neo4j_nodes_list[i])
     sleep(2)
     # Block for 'synchronous' sends
     try:
-        record_metadata = future.get(timeout=10)
+        response_producer = future.get(timeout=5)
 
         # Successful result returns assigned partition and offset
-        print(record_metadata.topic)
-        print(record_metadata.partition)
-        print(record_metadata.offset)
+        print(response_producer.topic)
+        print(response_producer.partition)
+        print(response_producer.offset)
     except KafkaError as e:
-        # Decide what to do if produce request failed...
         print('[ERROR] ' + e.__str__())
 
-# block until all async messages are sent
 producer.flush()

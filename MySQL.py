@@ -9,6 +9,7 @@ def insert_data_on_my_sql():
     try:
         cnx = mysql.connector.connect(host='localhost', user='root', password='Qwerty123!', database='hua-python')
         cursor = cnx.cursor()
+
         table = ("CREATE TABLE IF NOT EXISTS `hua-python`.`Product` ("
                  "`productID` INT NOT NULL,"
                  "`name` VARCHAR(150) NOT NULL,"
@@ -19,7 +20,7 @@ def insert_data_on_my_sql():
                  "UNIQUE INDEX `productID_UNIQUE` (`productID` ASC) VISIBLE);")
 
         try:
-            print("Creating Table Product")
+            print("Trying to create Table Product")
             cursor.execute(table)
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
@@ -66,6 +67,7 @@ def return_from_csv_columns():
     types = []
     prices = []
     counter = 0
+
     for column in file:
         ratings.append(column['Rating'])
         titles.append(column['Book_title'])

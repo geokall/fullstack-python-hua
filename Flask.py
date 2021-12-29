@@ -23,8 +23,6 @@ def find_products_by_username(name):
 
     if len(response_list) == 0:
         return {'notFoundError': 'None users found with this username'}
-    elif len(response_list) > 1:
-        return {'duplicateError': 'In DB exists more than one users with the same username'}
     elif len(response_list) == 1:
         return {'products': response_list[0].get('products')}
     else:
