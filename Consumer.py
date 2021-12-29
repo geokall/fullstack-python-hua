@@ -3,25 +3,22 @@ from time import sleep
 from kafka import KafkaConsumer
 from pymongo import MongoClient
 
-# To consume latest messages and auto-commit offsets ##############################
 consumer = KafkaConsumer(group_id='my-group',
                          bootstrap_servers=['localhost:9092'],
                          value_deserializer=lambda m: json.loads(m.decode('utf-8')),
                          auto_offset_reset='earliest',
                          consumer_timeout_ms=10000)
 
-topics_list = ['products-topic', 'users-topic']
-consumer.subscribe(topics_list)
-###################################################################################
+list_of_product_user_topics = ['products-topic', 'users-topic']
+consumer.subscribe(list_of_product_user_topics)
 
-# Connect to MongoDB ##############################################################
 client = MongoClient('localhost:27017',
                      username='root',
                      password='Qwerty123!',
                      authMechanism='SCRAM-SHA-256')
 
-database = client['usersDB']
-collection = database['users']
+database = client['hua-python']
+collection = database['user']
 
 # Delete everything in mongo database
 x = collection.delete_many({})

@@ -9,8 +9,8 @@ client = MongoClient('localhost:27017',
                      password='Qwerty123!',
                      authMechanism='SCRAM-SHA-256')
 
-database = client['usersDB']
-collection = database['users']
+database = client['hua-python']
+collection = database['user']
 
 
 @app_flask.route('/user/<name>', methods=['GET'])
