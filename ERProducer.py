@@ -28,9 +28,10 @@ try:
                              value_serializer=lambda x:
                              json.dumps(x).encode('utf-8'))
 
-    products_length = len(products_from_db)
+    print('posa tha steilei')
+    print(len(all_rows))
 
-    for i in range(products_length):
+    for i in range(len(all_rows)):
         print('Sending data to products-topic: ', list_of_json_data[i])
         kafka_producer = producer.send('products-topic', list_of_json_data[i])
         # waiting 2 seconds per json data, will give the result 10 elements per 20 seconds

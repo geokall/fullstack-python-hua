@@ -20,66 +20,83 @@ client = MongoClient('localhost:27017',
 database = client['hua-python']
 collection = database['user']
 
-# Delete everything in mongo database
-x = collection.delete_many({})
-print(x.deleted_count, " documents deleted.")
+# Always delete all data in mongo db as a first step
+# print(collection.count_documents(), "existed in user collection.")
+mongo_response = collection.delete_many({})
+print(mongo_response.deleted_count, " deleted in user collection.")
 ####################################################################################
 users_left = []
 products_list = {}
 
 
-def fusion(product_list, usr):
-    result = []
-    not_inserted = []
-    flag = False
-    for productID in usr['productID']:
+def fusion(product_list, user):
+    list_of_inserted = []
+    list_of_not_inserted = []
+    is_found = False
+
+    for productID in user['productID']:
+        print('h lista twn products')
+        print(product_list.keys())
         if productID in product_list.keys():
-            result.append(product_list.get(productID))
-            flag = True
+            product = product_list.get(productID)
+            list_of_inserted.append(product)
+            is_found = True
         else:
-            not_inserted.append(productID)
-    fused_user = {
-        'name': usr['name'],
-        'age': usr['age'],
-        'height': usr['height'],
-        'products': result
+            list_of_not_inserted.append(productID)
+
+    data_fusion_user = {
+        'name': user['name'],
+        'age': user['age'],
+        'height': user['height'],
+        'products': list_of_inserted
     }
 
-    return {'fusion_user': fused_user, 'not_inserted': not_inserted, 'found': flag}
+    return {'inserted': data_fusion_user, 'not_inserted': list_of_not_inserted, 'is_found': is_found}
 
 
 for message in consumer:
 
-    print('')
-    print("[NEW MESSAGE] ========> %s:%d:%d: value=%s" % (message.topic,
-                                                          message.partition,
-                                                          message.offset,
-                                                          message.value))
+    # print('topic: ' + message.topic)
+    # print('partition: ' + message.partition)
+    # print('offset: ' + message.offset)
+    # print('value: ' + message.value)
+    print('message value')
     data = message.value
+    print(data)
+    print('ti topic einai')
+    print(message.topic)
+
     if message.topic == 'products-topic':
         products_list[data.get('productID')] = data
         print('Saving product to list.')
         print('-----U S E R S -- L E F T----------------------------------------')
         print(users_left)
+
         for index, user in enumerate(users_left.copy()):
             fuse = fusion(products_list, user)
+            print('fusion products-topic')
+            print(fuse.get('inserted'))
+            print(fuse.get('not_inserted'))
+            print(fuse.get('is_found'))
 
-            if fuse.get('found'):
+            if fuse.get('is_found'):
                 query = {'name': user['name']}
-                if len(fuse.get('fusion_user').get('products')) == 0:
+
+                if len(fuse.get('inserted').get('products')) == 0:
                     raise Exception('Something went wrong ...')
 
-                new_product = {'$push': {'products': {'$each': fuse.get('fusion_user').get('products')}}}
-
+                new_product = {'$push': {'products': {'$each': fuse.get('inserted').get('products')}}}
+                print('neo proion')
                 print(new_product)
-                collection.update_one(query, new_product)
-                print('____Database updated.')
 
+                collection.update_one(query, new_product)
+
+                # dhladh inserted
                 if not fuse.get('not_inserted'):
                     users_left.remove(user)
 
                 else:
-                    print(fuse.get('fusion_user'), index)
+                    print(fuse.get('inserted'), index)
                     users_left.remove(user)
                     users_left.append({
                         'name': user['name'],
@@ -91,10 +108,16 @@ for message in consumer:
         print('-----------------------------------------------------------------')
         print(users_left)
 
+    # users-topic
     else:
         fuse = fusion(products_list, data)
-        print(fuse.get('fusion_user'))
-        collection.insert_one(fuse.get('fusion_user'))
+
+        print('fusion users-topic')
+        print(fuse.get('inserted'))
+        print(fuse.get('not_inserted'))
+        print(fuse.get('is_found'))
+
+        collection.insert_one(fuse.get('inserted'))
         print('User added.')
 
         if fuse.get('not_inserted'):
