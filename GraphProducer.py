@@ -34,7 +34,7 @@ for obj in range(len(all_neo4j_nodes)):
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda m: json.dumps(m).encode('utf-8'))
 
-print('Sending total nodes: {}'.format(len(filtered_neo4j_nodes_list)))
+print('Sending total nodes: {}'.format(len(all_neo4j_nodes)))
 
 for i in range(len(filtered_neo4j_nodes_list)):
     print('Sending data to users-topic: ', filtered_neo4j_nodes_list[i])

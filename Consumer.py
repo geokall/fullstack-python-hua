@@ -30,49 +30,48 @@ products_list = {}
 
 
 def fusion(product_list, user):
-    list_of_inserted = []
-    list_of_not_inserted = []
+    list_of_exist_in_keys = []
+    list_of_not_exist_in_keys = []
     is_found = False
 
+    # array of product ids
     for productID in user['productID']:
-        print('h lista twn products')
-        print(product_list.keys())
+        print('list of products keys: {}'.format(product_list.keys()))
+
         if productID in product_list.keys():
             product = product_list.get(productID)
-            list_of_inserted.append(product)
+            list_of_exist_in_keys.append(product)
             is_found = True
         else:
-            list_of_not_inserted.append(productID)
+            list_of_not_exist_in_keys.append(productID)
 
     data_fusion_user = {
         'name': user['name'],
         'age': user['age'],
         'height': user['height'],
-        'products': list_of_inserted
+        'products': list_of_exist_in_keys
     }
 
-    return {'inserted': data_fusion_user, 'not_inserted': list_of_not_inserted, 'is_found': is_found}
+    return {'inserted': data_fusion_user, 'not_inserted': list_of_not_exist_in_keys, 'is_found': is_found}
 
 
 for message in consumer:
 
-    # print('topic: ' + message.topic)
-    # print('partition: ' + message.partition)
-    # print('offset: ' + message.offset)
-    # print('value: ' + message.value)
-    print('message value')
+    print('topic: {}'.format(message.topic))
+    print('partition: {}'.format(message.partition))
+    print('offset: {}'.format(message.offset))
+    print('message value: {}'.format(message.value))
+
+    # contains array of product ids and product data (name,age..)
     data = message.value
-    print(data)
-    print('ti topic einai')
-    print(message.topic)
 
     if message.topic == 'products-topic':
         products_list[data.get('productID')] = data
         print('Saving product to list.')
         print('-----U S E R S -- L E F T----------------------------------------')
-        print(users_left)
+        print(users_left.copy())
 
-        for index, user in enumerate(users_left.copy()):
+        for count, user in enumerate(users_left.copy()):
             fuse = fusion(products_list, user)
             print('fusion products-topic')
             print(fuse.get('inserted'))
@@ -91,12 +90,12 @@ for message in consumer:
 
                 collection.update_one(query, new_product)
 
-                # dhladh inserted
+                # this case is about those who have been inserted
                 if not fuse.get('not_inserted'):
                     users_left.remove(user)
 
                 else:
-                    print(fuse.get('inserted'), index)
+                    print(fuse.get('inserted'), count)
                     users_left.remove(user)
                     users_left.append({
                         'name': user['name'],
