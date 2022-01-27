@@ -16,8 +16,7 @@ if __name__ == '__main__':
     os.system("sudo -S docker exec kafka tmp/deleteTopic.sh")
 
     os.system("gnome-terminal -- python ERProducer.py")
-    # os.system("gnome-terminal -- python GraphProducer.py")
+    os.system("gnome-terminal -- python GraphProducer.py")
     # os.system("gnome-terminal -- python Consumer.py")
-
 
     app_flask.run()

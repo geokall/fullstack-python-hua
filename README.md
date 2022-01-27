@@ -192,14 +192,17 @@ The last script is match_friendship_between_two(name1, name2) where this functio
 
 ## ERP Producer
 
-Fetching all product rows and send messages to the products-topic. <br />
+Fetching all product rows and publish at kafka message bus on products-topic. <br />
 Waiting 2 seconds per json row, will provide the required result: 10 elements per 20 seconds.
 
 ![screenshot](images/erpProducer.png)
 
-Two scripts for each producer exist. ERProducer.py sends messages to the products-topic and GraphProducer.py sends messages to the users-topic.
+## Graph Producer
 
+Fetching all nodes and publish at kafka message bus in users-topic. <br />
+Waiting 4 seconds per node, will provide the required result: 5 elements per 20 seconds.
 
+![screenshot](images/graphProducer.png)
 
 
 

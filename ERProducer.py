@@ -32,12 +32,12 @@ try:
 
     for i in range(len(all_rows)):
         print('Product row to products-topic: ', list_of_json_data[i])
-        kafka_producer = producer.send('products-topic', list_of_json_data[i])
+        erp_producer = producer.send('products-topic', list_of_json_data[i])
         # Waiting 2 seconds per json row, will provide the required result: 10 elements per 20 seconds
         sleep(2)
         try:
             # Successful result returns assigned partition and offset
-            # kafka_producer.get(timeout=2)
+            # erp_producer.get(timeout=2)
             print('Successfully published the message to products-topic')
         except KafkaError as e:
             print('[ERROR] ' + e.__str__())

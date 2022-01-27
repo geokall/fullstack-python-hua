@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69562b33-1587-4450-9a0d-2cc769fbba77" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/images/erpProducer.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/graphProducer.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ERProducer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERProducer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphProducer.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphProducer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -119,7 +120,7 @@
       <workItem from="1641762171797" duration="2278000" />
       <workItem from="1641767107886" duration="659000" />
       <workItem from="1641827433632" duration="2332000" />
-      <workItem from="1643272092067" duration="8496000" />
+      <workItem from="1643272092067" duration="9572000" />
     </task>
     <task id="LOCAL-00001" summary="Inserting data">
       <created>1640557866228</created>
@@ -205,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643277857589</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="erp producer">
+      <created>1643282184203</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1643282184203</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -236,7 +244,8 @@
     <MESSAGE value="neo4j readme" />
     <MESSAGE value="br" />
     <MESSAGE value="compose" />
-    <option name="LAST_COMMIT_MESSAGE" value="compose" />
+    <MESSAGE value="erp producer" />
+    <option name="LAST_COMMIT_MESSAGE" value="erp producer" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/fullstack$main.coverage" NAME="main Coverage Results" MODIFIED="1643274299166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

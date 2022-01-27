@@ -20,31 +20,32 @@ def retrieve_all_nodes_from_neo4j(tx):
         "RETURN n "
     )
     result = tx.run(query)
-    print("Returned all nodes in database.")
+    print("Returned all nodes from neo4j.")
     return [result.data()]
 
 
-neo4j_list = fetch_all_nodes()
+all_neo4j_nodes = fetch_all_nodes()
 filtered_neo4j_nodes_list = []
 
-for obj in range(len(neo4j_list)):
+for obj in range(len(all_neo4j_nodes)):
     # Removing {'n':}
-    filtered_neo4j_nodes_list.append(neo4j_list[obj]["n"])
+    filtered_neo4j_nodes_list.append(all_neo4j_nodes[obj]["n"])
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda m: json.dumps(m).encode('utf-8'))
+
+print('Sending total nodes: {}'.format(len(filtered_neo4j_nodes_list)))
+
 for i in range(len(filtered_neo4j_nodes_list)):
     print('Sending data to users-topic: ', filtered_neo4j_nodes_list[i])
-    future = producer.send('users-topic', filtered_neo4j_nodes_list[i])
-    sleep(2)
-    # Block for 'synchronous' sends
+    graph_producer = producer.send('users-topic', filtered_neo4j_nodes_list[i])
+    sleep(4)
+    # Waiting 4 seconds per row, will provide the required result: 5 elements per 20 seconds
     try:
-        response_producer = future.get(timeout=5)
+        # response_producer = graph_producer.get(timeout=2)
+        # in case we wanted to retrieve topic, partition,offset
 
-        # Successful result returns assigned partition and offset
-        print(response_producer.topic)
-        print(response_producer.partition)
-        print(response_producer.offset)
+        print('Successfully published the message to users-topic')
     except KafkaError as e:
         print('[ERROR] ' + e.__str__())
 
