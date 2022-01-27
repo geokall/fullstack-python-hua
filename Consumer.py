@@ -25,20 +25,20 @@ mongo_response = collection.delete_many({})
 print('Deleted total {} users in user collection.'.format(mongo_response.deleted_count))
 
 list_of_users_to_save = []
-list_of_unique_product_ids = {}
+list_of_product_ids = {}
 
 
-def fusion(list_of_unique_product_id, user):
+def fusion(list_of_product_id, user):
     list_of_exist_in_keys = []
     list_of_not_exist_in_keys = []
     is_found = False
 
-    print('list of products keys: {}'.format(list_of_unique_product_id.keys()))
+    print('list of products keys: {}'.format(list_of_product_id.keys()))
 
     # array of product ids
     for productID in user['productID']:
-        if productID in list_of_unique_product_id.keys():
-            product = list_of_unique_product_id.get(productID)
+        if productID in list_of_product_id.keys():
+            product = list_of_product_id.get(productID)
             list_of_exist_in_keys.append(product)
             is_found = True
         else:
@@ -62,15 +62,16 @@ for message in consumer:
     # print('offset: {}'.format(message.offset))
     print('message value: {}'.format(message.value))
 
-    # contains array of product ids and product data (name, age...)
+    # users-topic e.g: {'name': 'Giorgos', 'age': 21, 'height': 1.78, 'products': [4]}
+    # products-topic e.g: {'productID': 4, 'name': 'How Google Works', 'price': 13.16, 'rating': 4.06}
     data = message.value
 
     if message.topic == 'products-topic':
-        list_of_unique_product_ids[data.get('productID')] = data
+        list_of_product_ids[data.get('productID')] = data
 
         # enumerate to retrieve count
         for count, user in enumerate(list_of_users_to_save.copy()):
-            fuse = fusion(list_of_unique_product_ids, user)
+            fuse = fusion(list_of_product_ids, user)
             print('Data fusion on products-topic')
             print(fuse.get('inserted'))
             print(fuse.get('not_inserted'))
@@ -86,7 +87,7 @@ for message in consumer:
                 print(new_product)
 
                 collection.update_one(saved_user_in_db_by_name, new_product)
-                print('User updated successfully.')
+                print('User updated in mongoDB successfully.')
 
                 # this case is about those who have been inserted
                 if not fuse.get('not_inserted'):
@@ -109,20 +110,21 @@ for message in consumer:
 
     # users-topic
     else:
-        fuse = fusion(list_of_unique_product_ids, data)
-
         print('Data fusion on users-topic')
+
+        fuse = fusion(list_of_product_ids, data)
+
         print(fuse.get('inserted'))
         print(fuse.get('not_inserted'))
         print('User found: {}'.format(fuse.get('is_found')))
 
         collection.insert_one(fuse.get('inserted'))
-        print('User inserted successfully.')
+        print('User created in mongoDB successfully.')
 
         if fuse.get('not_inserted'):
             data['productID'] = fuse.get('not_inserted')
             list_of_users_to_save.append(data)
 
-print('Final result should be empty array')
+print('Final result should be empty array.')
 print(list_of_users_to_save)
 sleep(2000)
