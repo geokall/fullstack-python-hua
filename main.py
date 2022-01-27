@@ -15,8 +15,9 @@ if __name__ == '__main__':
     # delete existing topics __consumer_offsets, products-topic, users-topic
     os.system("sudo -S docker exec kafka tmp/deleteTopic.sh")
 
-    os.system("gnome-terminal -- python Consumer.py")
     os.system("gnome-terminal -- python ERProducer.py")
-    os.system("gnome-terminal -- python GraphProducer.py")
+    # os.system("gnome-terminal -- python GraphProducer.py")
+    # os.system("gnome-terminal -- python Consumer.py")
+
 
     app_flask.run()

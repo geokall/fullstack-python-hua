@@ -28,21 +28,17 @@ try:
                              value_serializer=lambda x:
                              json.dumps(x).encode('utf-8'))
 
-    print('posa tha steilei')
-    print(len(all_rows))
+    print('Sending total products: {}'.format(len(all_rows)))
 
     for i in range(len(all_rows)):
-        print('Sending data to products-topic: ', list_of_json_data[i])
+        print('Product row to products-topic: ', list_of_json_data[i])
         kafka_producer = producer.send('products-topic', list_of_json_data[i])
-        # waiting 2 seconds per json data, will give the result 10 elements per 20 seconds
+        # Waiting 2 seconds per json row, will provide the required result: 10 elements per 20 seconds
         sleep(2)
         try:
-            response_producer = kafka_producer.get(timeout=5)
-
             # Successful result returns assigned partition and offset
-            print(response_producer.topic)
-            print(response_producer.partition)
-            print(response_producer.offset)
+            # kafka_producer.get(timeout=2)
+            print('Successfully published the message to products-topic')
         except KafkaError as e:
             print('[ERROR] ' + e.__str__())
 

@@ -190,6 +190,13 @@ The last script is match_friendship_between_two(name1, name2) where this functio
 
 ![screenshot](images/neo4j.png)
 
+## ERP Producer
+
+Fetching all product rows and send messages to the products-topic. <br />
+Waiting 2 seconds per json row, will provide the required result: 10 elements per 20 seconds.
+
+![screenshot](images/erpProducer.png)
+
 Two scripts for each producer exist. ERProducer.py sends messages to the products-topic and GraphProducer.py sends messages to the users-topic.
 
 
