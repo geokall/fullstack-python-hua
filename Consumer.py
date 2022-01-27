@@ -20,29 +20,29 @@ client = MongoClient('localhost:27017',
 database = client['hua-python']
 collection = database['user']
 
-# Always delete all data in mongo db as a first step
-# print(collection.count_documents(), "existed in user collection.")
+# Deleting all users in the db collection as the very first step.
 mongo_response = collection.delete_many({})
-print(mongo_response.deleted_count, " deleted in user collection.")
-####################################################################################
-users_left = []
-products_list = {}
+print('Deleted total {} users in user collection.'.format(mongo_response.deleted_count))
+
+list_of_users_to_save = []
+list_of_unique_product_ids = {}
 
 
-def fusion(product_list, user):
+def fusion(list_of_unique_product_id, user):
     list_of_exist_in_keys = []
     list_of_not_exist_in_keys = []
     is_found = False
 
+    print('list of products keys: {}'.format(list_of_unique_product_id.keys()))
+
     # array of product ids
     for productID in user['productID']:
-        print('list of products keys: {}'.format(product_list.keys()))
-
-        if productID in product_list.keys():
-            product = product_list.get(productID)
+        if productID in list_of_unique_product_id.keys():
+            product = list_of_unique_product_id.get(productID)
             list_of_exist_in_keys.append(product)
             is_found = True
         else:
+            print('ID {} does not exist in products list'.format(productID))
             list_of_not_exist_in_keys.append(productID)
 
     data_fusion_user = {
@@ -57,72 +57,72 @@ def fusion(product_list, user):
 
 for message in consumer:
 
-    print('topic: {}'.format(message.topic))
-    print('partition: {}'.format(message.partition))
-    print('offset: {}'.format(message.offset))
+    # print('topic: {}'.format(message.topic))
+    # print('partition: {}'.format(message.partition))
+    # print('offset: {}'.format(message.offset))
     print('message value: {}'.format(message.value))
 
-    # contains array of product ids and product data (name,age..)
+    # contains array of product ids and product data (name, age...)
     data = message.value
 
     if message.topic == 'products-topic':
-        products_list[data.get('productID')] = data
-        print('Saving product to list.')
-        print('-----U S E R S -- L E F T----------------------------------------')
-        print(users_left.copy())
+        list_of_unique_product_ids[data.get('productID')] = data
 
-        for count, user in enumerate(users_left.copy()):
-            fuse = fusion(products_list, user)
-            print('fusion products-topic')
+        # enumerate to retrieve count
+        for count, user in enumerate(list_of_users_to_save.copy()):
+            fuse = fusion(list_of_unique_product_ids, user)
+            print('Data fusion on products-topic')
             print(fuse.get('inserted'))
             print(fuse.get('not_inserted'))
-            print(fuse.get('is_found'))
+            print('User found: {}'.format(fuse.get('is_found')))
 
             if fuse.get('is_found'):
-                query = {'name': user['name']}
+                saved_user_in_db_by_name = {'name': user['name']}
 
                 if len(fuse.get('inserted').get('products')) == 0:
-                    raise Exception('Something went wrong ...')
+                    raise Exception('Something went wrong, user must have at least one product')
 
                 new_product = {'$push': {'products': {'$each': fuse.get('inserted').get('products')}}}
-                print('neo proion')
                 print(new_product)
 
-                collection.update_one(query, new_product)
+                collection.update_one(saved_user_in_db_by_name, new_product)
+                print('User updated successfully.')
 
                 # this case is about those who have been inserted
                 if not fuse.get('not_inserted'):
-                    users_left.remove(user)
+                    print('Removed from users: {}'.format(user))
+                    list_of_users_to_save.remove(user)
 
                 else:
                     print(fuse.get('inserted'), count)
-                    users_left.remove(user)
-                    users_left.append({
+                    print('Removed from users: {}'.format(user))
+                    list_of_users_to_save.remove(user)
+                    list_of_users_to_save.append({
                         'name': user['name'],
                         'age': user['age'],
                         'height': user['height'],
                         'productID': fuse.get('not_inserted')
                     })
 
-        print('-----------------------------------------------------------------')
-        print(users_left)
+        print('-----///-----')
+        print(list_of_users_to_save)
 
     # users-topic
     else:
-        fuse = fusion(products_list, data)
+        fuse = fusion(list_of_unique_product_ids, data)
 
-        print('fusion users-topic')
+        print('Data fusion on users-topic')
         print(fuse.get('inserted'))
         print(fuse.get('not_inserted'))
-        print(fuse.get('is_found'))
+        print('User found: {}'.format(fuse.get('is_found')))
 
         collection.insert_one(fuse.get('inserted'))
-        print('User added.')
+        print('User inserted successfully.')
 
         if fuse.get('not_inserted'):
             data['productID'] = fuse.get('not_inserted')
-            users_left.append(data)
+            list_of_users_to_save.append(data)
 
-print('THE END')
-print(users_left)
-sleep(1000)
+print('Final result should be empty array')
+print(list_of_users_to_save)
+sleep(2000)

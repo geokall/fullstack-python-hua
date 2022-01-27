@@ -7,8 +7,6 @@
     <list default="true" id="69562b33-1587-4450-9a0d-2cc769fbba77" name="Changes" comment="some changes in consumer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Consumer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Consumer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphProducer.py" beforeDir="false" afterPath="$PROJECT_DIR$/GraphProducer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
