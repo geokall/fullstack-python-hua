@@ -73,7 +73,7 @@ First you need to create the schema 'hua-python' in order to run the script.
 CREATE SCHEMA `hua-python` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 ```
 
-##Kafka
+## Kafka
 If you want to manually create the topics, use the below command
 ```bash
 sudo docker exec -it kafka /bin/sh
@@ -105,7 +105,13 @@ The main script is responsible to erase everything in the very first step such a
 ![Screenshot](images/productsMySQL.png)
 
 In the next step, a graph of users is inserted in the Neo4j database with these attributes:
-id, age, height, name and productID.
+id, age, height, name and productID. <br />
+The very first step is to delete every node. <br />
+Products are inserted using random value from 1 up to 5 and the age is randomly selected from 18 up to 40. Same applied to height from 1.60 up to 1.90, rounded by 2 <br />
+How friendship script is implemented: <br />
+create_friendship_between_two(name1, name2) script creating the first users with every attribute. <br />
+add_friendship_between_two(name1, name2) create a new friendship using the already created user and matches another one using find_person_by_name(name). <br />
+The last script is match_friendship_between_two(name1, name2) where this function need to find two users by name using find_person_by_name(name). <br />
 
 ![screenshot](images/neo4j.png)
 
