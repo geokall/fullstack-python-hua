@@ -95,6 +95,8 @@ sudo docker-compose up -d
 ```
 
 ## Runtime
+
+## MySQL
 Downloaded and inserted the first 50 rows of this [dataset](https://www.kaggle.com/thomaskonstantin/top-270-rated-computer-science-programing-books) which contains Books products.
 productID is manually inserted, the rest data is read from the csv reader.
 name, price, rating and type.
@@ -103,6 +105,8 @@ Price transformed from string to float and rounded in 2 decimal.
 The main script is responsible to erase everything in the very first step such as topics, users from Neo4j. MySQL's data are not erased.
 
 ![Screenshot](images/productsMySQL.png)
+
+## Neo4j
 
 In the next step, a graph of users is inserted in the Neo4j database with these attributes:
 id, age, height, name and productID. <br />
