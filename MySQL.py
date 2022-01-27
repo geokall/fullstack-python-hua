@@ -20,7 +20,7 @@ def insert_data_on_my_sql():
                  "UNIQUE INDEX `productID_UNIQUE` (`productID` ASC) VISIBLE);")
 
         try:
-            print("Trying to create Table Product")
+            print("Trying to create Table Product.")
             cursor.execute(table)
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
@@ -28,7 +28,7 @@ def insert_data_on_my_sql():
             else:
                 print(err.msg)
         else:
-            print("Table Product is successfully created")
+            print("Table Product is successfully created.")
 
         try:
             for number in range(1, 51):
@@ -40,22 +40,22 @@ def insert_data_on_my_sql():
                 values = (number, ratings[number], titles[number], types[number], rounded_prices)
                 cursor.execute(add_product, values)
                 cnx.commit()
-                print("Insert was done successfully")
+                print("Insert was done successfully.")
 
         except mysql.connector.Error as error:
             print("Failed to insert into MySQL table {}".format(error))
 
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print("Wrong credentials")
+            print("Wrong credentials.")
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print("Database does not exist")
+            print("Database does not exist.")
         else:
             print(err)
     else:
         cursor.close()
         cnx.close()
-        print("MySQL connection is closed")
+        print("MySQL connection is closed.")
 
 
 def return_from_csv_columns():

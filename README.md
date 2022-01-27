@@ -4,7 +4,7 @@
 Please read [Extract-Transform-Load-Procedure-HUA](https://docs.google.com/document/d/1S0bsfSV8wyfmRdnTLYC2k5t9HR3GiPdVPvfVQ95Bi1E/edit)
 
 ## Installation
-User the [docker-fedora-guide](https://docs.docker.com/engine/install/fedora/) to install docker in fedora. In case you have different linux distribution, please check the official guide
+User the [docker-fedora-guide](https://docs.docker.com/engine/install/fedora/) to install docker in fedora. In case you have different linux distribution, please check the official guide.
 ```bash
 sudo dnf remove docker \
                   docker-client \
@@ -26,7 +26,7 @@ sudo dnf config-manager \
 sudo dnf install docker-ce docker-ce-cli containerd.io
 ```
 
-## Must steps
+## Necessary steps
 ```bash
 sudo dnf install mysql-workbench
 
@@ -40,9 +40,10 @@ pip install Flask
 ```
 
 ## Optional steps
-You might need to install Postman and any IDE you prefer.
+Please install Postman (still you can use curl) and any IDE you prefer.
+This project and every project of mine, is implemented using JetBrains Software.
 
-## Neo4j
+## Neo4j installation
 Install neo4j on docker using the name hua-neo4j and environment neo4j/hua-neo4j.
 If the port 7687 is already in use, you should use the command "sudo lsof -i -P -n | grep"
 and then kill it with "sudo kill (process_id)".
@@ -59,10 +60,9 @@ sudo docker run \
     neo4j:latest
 ```
 ## Docker Login
-Use the command below in order to login in the docker using your credentials and run mysql service in the background
+Use the command below in order to login in the docker using your credentials and run mysql service in the background.
 ```bash
 docker login 
-username, password
 sudo docker run --name hua-mysql -p 3307:3307 -e MYSQL_ROOT_PASSWORD=Qwerty123! -d mysql
 ```
 
@@ -98,13 +98,14 @@ sudo docker-compose up -d
 Downloaded and inserted the first 50 rows of this [dataset](https://www.kaggle.com/thomaskonstantin/top-270-rated-computer-science-programing-books) which contains Books products.
 productID is manually inserted, the rest data is read from the csv reader.
 name, price, rating and type.
+Price transformed from string to float and rounded in 2 decimal.
 
 The main script is responsible to erase everything in the very first step such as topics, users from Neo4j. MySQL's data are not erased.
 
 ![Screenshot](images/productsMySQL.png)
 
 In the next step, a graph of users is inserted in the Neo4j database with these attributes:
-id, age, height, name and productID
+id, age, height, name and productID.
 
 ![screenshot](images/neo4j.png)
 
