@@ -25,19 +25,18 @@ collection = database['user']
 mongo_response = collection.delete_many({})
 print(mongo_response.deleted_count, " deleted in user collection.")
 ####################################################################################
-total_users_fetched = []
+users_left = []
 products_list = {}
 
 
-def data_fusion(product_list, user):
+def fusion(product_list, user):
     list_of_exist_in_keys = []
     list_of_not_exist_in_keys = []
     is_found = False
 
-    print('list of products keys: {}'.format(product_list.keys()))
-
     # array of product ids
     for productID in user['productID']:
+        print('list of products keys: {}'.format(product_list.keys()))
 
         if productID in product_list.keys():
             product = product_list.get(productID)
@@ -53,7 +52,7 @@ def data_fusion(product_list, user):
         'products': list_of_exist_in_keys
     }
 
-    return {'exist': data_fusion_user, 'not_exist': list_of_not_exist_in_keys, 'is_found': is_found}
+    return {'inserted': data_fusion_user, 'not_inserted': list_of_not_exist_in_keys, 'is_found': is_found}
 
 
 for message in consumer:
@@ -68,62 +67,62 @@ for message in consumer:
 
     if message.topic == 'products-topic':
         products_list[data.get('productID')] = data
-        print('Saving product to products list')
+        print('Saving product to list.')
         print('-----U S E R S -- L E F T----------------------------------------')
-        print(total_users_fetched.copy())
+        print(users_left.copy())
 
-        for count, user in enumerate(total_users_fetched.copy()):
-            fuse = data_fusion(products_list, user)
+        for count, user in enumerate(users_left.copy()):
+            fuse = fusion(products_list, user)
             print('fusion products-topic')
-            print(fuse.get('exist'))
-            print(fuse.get('not_exist'))
+            print(fuse.get('inserted'))
+            print(fuse.get('not_inserted'))
             print(fuse.get('is_found'))
 
             if fuse.get('is_found'):
                 query = {'name': user['name']}
 
-                if len(fuse.get('exist').get('products')) == 0:
+                if len(fuse.get('inserted').get('products')) == 0:
                     raise Exception('Something went wrong ...')
 
-                new_product = {'$push': {'products': {'$each': fuse.get('exist').get('products')}}}
+                new_product = {'$push': {'products': {'$each': fuse.get('inserted').get('products')}}}
                 print('neo proion')
                 print(new_product)
 
                 collection.update_one(query, new_product)
 
-                # this case is about those who have been exist
-                if not fuse.get('not_exist'):
-                    total_users_fetched.remove(user)
+                # this case is about those who have been inserted
+                if not fuse.get('not_inserted'):
+                    users_left.remove(user)
 
                 else:
-                    print(fuse.get('exist'), count)
-                    total_users_fetched.remove(user)
-                    total_users_fetched.append({
+                    print(fuse.get('inserted'), count)
+                    users_left.remove(user)
+                    users_left.append({
                         'name': user['name'],
                         'age': user['age'],
                         'height': user['height'],
-                        'productID': fuse.get('not_exist')
+                        'productID': fuse.get('not_inserted')
                     })
 
         print('-----------------------------------------------------------------')
-        print(total_users_fetched)
+        print(users_left)
 
     # users-topic
     else:
-        fuse = data_fusion(products_list, data)
+        fuse = fusion(products_list, data)
 
         print('fusion users-topic')
-        print(fuse.get('exist'))
-        print(fuse.get('not_exist'))
+        print(fuse.get('inserted'))
+        print(fuse.get('not_inserted'))
         print(fuse.get('is_found'))
 
-        collection.insert_one(fuse.get('exist'))
+        collection.insert_one(fuse.get('inserted'))
         print('User added.')
 
-        if fuse.get('not_exist'):
-            data['productID'] = fuse.get('not_exist')
-            total_users_fetched.append(data)
+        if fuse.get('not_inserted'):
+            data['productID'] = fuse.get('not_inserted')
+            users_left.append(data)
 
 print('THE END')
-print(total_users_fetched)
+print(users_left)
 sleep(1000)
