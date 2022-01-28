@@ -53,7 +53,7 @@ for message in consumer:
         list_of_name_and_product_ids.append(name_and_product)
 
         collection.insert_one(created_user)
-        print('User: {} created in mongoDB successfully.'.format(data.get('name')))
+        print('User: {} created successfully.'.format(data.get('name')))
 
     elif message.topic == 'products-topic':
         products_list[data.get('productID')] = data
