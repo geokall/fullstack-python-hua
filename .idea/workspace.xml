@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69562b33-1587-4450-9a0d-2cc769fbba77" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/images/consumer.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +120,8 @@
       <workItem from="1643306520237" duration="170000" />
       <workItem from="1643306705689" duration="595000" />
       <workItem from="1643307355018" duration="4485000" />
-      <workItem from="1643363088390" duration="13402000" />
+      <workItem from="1643363088390" duration="13840000" />
+      <workItem from="1643409209687" duration="39000" />
     </task>
     <task id="LOCAL-00001" summary="Inserting data">
       <created>1640557866228</created>
@@ -243,7 +242,28 @@
       <option name="project" value="LOCAL" />
       <updated>1643378298737</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="postman">
+      <created>1643378985862</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1643378985862</updated>
+    </task>
+    <task id="LOCAL-00019" summary="bash">
+      <created>1643379095240</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1643379095240</updated>
+    </task>
+    <task id="LOCAL-00020" summary="mongoDB">
+      <created>1643379213568</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1643379213568</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,7 +299,10 @@
     <MESSAGE value="minor" />
     <MESSAGE value="comments" />
     <MESSAGE value="final version of consumer" />
-    <option name="LAST_COMMIT_MESSAGE" value="final version of consumer" />
+    <MESSAGE value="postman" />
+    <MESSAGE value="bash" />
+    <MESSAGE value="mongoDB" />
+    <option name="LAST_COMMIT_MESSAGE" value="mongoDB" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/fullstack$main.coverage" NAME="main Coverage Results" MODIFIED="1643274299166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

@@ -22,7 +22,7 @@ def find_products_by_username(name):
     response_list = list(response)
 
     if len(response_list) == 0:
-        return {'notFoundError': 'None users found with this username'}
+        return {'notFoundError': 'User not found'}
     elif len(response_list) == 1:
         return {'products': response_list[0].get('products')}
     else:
