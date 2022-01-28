@@ -209,10 +209,13 @@ Waiting 4 seconds per node, will provide the required result: 5 elements per 20 
 ![screenshot](images/consumer.png)
 
 In case of users-topic, user is inserted in mongoDB with empty array of products. <br />
-For every user, a list of object with name and product ids is created, which will be used in products-topic.<br />.
+For every user, a list of object with name and product ids is created, which will be used in products-topic.<br />
 In case of products-topic, looping for every product and every list of name and product ids. <br />
 In case product equals with user's productId, fetching user by name and updating user with this product. <br />
-$addToSet allows saving only non-duplicate elements.
+```bash
+$addToSet
+```
+allows saving only non-duplicate elements.
 
 ## Postman
 
