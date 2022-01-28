@@ -213,10 +213,14 @@ For every user, a list of object with name and product ids is created, which wil
 In case of products-topic, looping for every product and every list of name and product ids. <br />
 In case product equals with user's productId, fetching user by name and updating user with this product. <br />
 ```bash
-$addToSet
+{'$addToSet': {'products': {'$each': list_of_result}}}
 ```
 allows saving only non-duplicate elements.
 
 ## Postman
 
 ![screenshot](images/postman.png)
+
+## MongoDB
+
+![screenshot](images/mongo.png)
