@@ -1,7 +1,7 @@
 # Extract Transform Load procedure - HUA
 
 ## What this is all about
-Please read [Extract-Transform-Load-Procedure-HUA](https://docs.google.com/document/d/1S0bsfSV8wyfmRdnTLYC2k5t9HR3GiPdVPvfVQ95Bi1E/edit)
+Please read: [Extract-Transform-Load-Procedure-HUA](https://docs.google.com/document/d/1S0bsfSV8wyfmRdnTLYC2k5t9HR3GiPdVPvfVQ95Bi1E/edit)
 
 ## Installation
 User the [docker-fedora-guide](https://docs.docker.com/engine/install/fedora/) to install docker in fedora. In case you have different linux distribution, please check the official guide.
@@ -41,7 +41,7 @@ pip install Flask
 
 ## Optional steps
 Please install Postman (still you can use curl) and any IDE you prefer.
-This project and every project of mine, is implemented using JetBrains Software.
+This project is implemented using JetBrains Software.
 
 ## Neo4j installation
 Install neo4j on docker using the name hua-neo4j and environment neo4j/hua-neo4j.
@@ -204,6 +204,16 @@ Waiting 4 seconds per node, will provide the required result: 5 elements per 20 
 
 ![screenshot](images/graphProducer.png)
 
+## Consumer
 
+![screenshot](images/consumer.png)
 
+In case of users-topic, user is inserted in mongoDB with empty array of products. <br />
+For every user, a list of object with name and product ids is created, which will be used in products-topic.<br />.
+In case of products-topic, looping for every product and every list of name and product ids. <br />
+In case product equals with user's productId, fetching user by name and updating user with this product. <br />
+$addToSet allows saving only non-duplicate elements.
 
+## Postman
+
+![screenshot](images/postman.png)

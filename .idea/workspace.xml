@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69562b33-1587-4450-9a0d-2cc769fbba77" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/images/consumer.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Consumer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Consumer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +122,7 @@
       <workItem from="1643306520237" duration="170000" />
       <workItem from="1643306705689" duration="595000" />
       <workItem from="1643307355018" duration="4485000" />
-      <workItem from="1643363088390" duration="12726000" />
+      <workItem from="1643363088390" duration="13402000" />
     </task>
     <task id="LOCAL-00001" summary="Inserting data">
       <created>1640557866228</created>
@@ -235,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643305668424</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="final version of consumer">
+      <created>1643378298737</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1643378298737</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,7 +278,8 @@
     <MESSAGE value="graph producer readme" />
     <MESSAGE value="minor" />
     <MESSAGE value="comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="comments" />
+    <MESSAGE value="final version of consumer" />
+    <option name="LAST_COMMIT_MESSAGE" value="final version of consumer" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/fullstack$main.coverage" NAME="main Coverage Results" MODIFIED="1643274299166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
